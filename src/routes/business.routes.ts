@@ -1,8 +1,52 @@
 import {Router} from "express";
-import {createBusiness, updateBusiness} from "../controllers/business.controller";
+import {createBusiness, deleteBusiness, getAllBusinesses, getBusiness, updateBusiness} from "../controllers/business.controller";
 import {authMiddleware} from "../middlewares/auth.middleware";
 
 const router = Router();
+
+
+/**
+ * @swagger
+* /Business/{id}:
+*   get:
+*     tags: [Business]
+*     security:
+*      - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID of the business to get
+ *         schema:
+ *           type: string
+*     responses:
+*       '200':
+*         description: Successfully get business
+*         content:
+*           application/json:
+*             schema:
+*               $ref: '#/components/schemas/Business'
+*/
+router.get("/:id", /*authMiddleware,*/ getBusiness);
+
+/**
+ * @swagger
+ * /Business:
+ *   get:
+ *     tags: [Business]
+ *     security:
+ *     - bearerAuth: []
+ *     responses:
+ *       '200':
+ *         description: Successfully get all the businesses
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Business'
+ */
+router.get("", /*authMiddleware,*/ getAllBusinesses);
 
 /**
  * @swagger
@@ -10,7 +54,7 @@ const router = Router();
  *   post:
  *     tags: [Business]
  *     security:
- *      - bearerAuth: []
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -18,7 +62,7 @@ const router = Router();
  *           schema:
  *             $ref: '#/components/schemas/Business'
  *     responses:
- *       '200':
+ *       '201':
  *         description: Successfully created business
  *         content:
  *           application/json:
@@ -33,7 +77,7 @@ router.post("", /*authMiddleware,*/ createBusiness);
  *   put:
  *     tags: [Business]
  *     security:
- *      - bearerAuth: []
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -42,12 +86,33 @@ router.post("", /*authMiddleware,*/ createBusiness);
  *             $ref: '#/components/schemas/Business'
  *     responses:
  *       '200':
- *         description: Successfully update business
+ *         description: Successfully updated business
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Business'
  */
 router.put("", /*authMiddleware,*/ updateBusiness);
+
+/**
+ * @swagger
+ * /Business/{id}:
+ *   delete:
+ *     tags: [Business]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         description: ID of the business to delete
+ *         schema:
+ *           type: string
+ *     responses:
+ *       '204':
+ *         description: Successfully deleted business
+ */
+router.delete("/:id", /*authMiddleware,*/ deleteBusiness);
+
 
 export default router;

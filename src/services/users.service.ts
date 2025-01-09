@@ -1,14 +1,12 @@
 import {User, UserModel} from "../models/user.model";
 import * as bcrypt from "bcrypt";
 import { sendEmailByTootit } from "./sendEmailByTootit";
+import { errorLog, serviceLog } from "../../config/log-config";
 // import { sendEmail, sendEmail2 } from "./sendEmail";
 
 export const createUser = async (name: string, password: string): Promise<User | null> => {
     try {
-        // sendEmail2("tootit.office@gmail.com", "שלום לך משתמש חדש!", "הרשמתך לאתר הצילום של אביגיל בוצעה בהצלחה!");
-        //קידוד הסיסמה
         const hash = await bcrypt.hash(password, 10);
-        //השמה לסיסמה הקיימת
         password = hash;
         const newUser = await new UserModel({name, password});
         const userSaved= await newUser.save();
@@ -44,5 +42,14 @@ export const deleteUser = async () => {};
 export const updateUser = async () => {};
 
 export const getUser = async (id: string): Promise<User | null> => {
-    return await UserModel.findById(id);
+    try {
+        const user = await UserModel.findById(id);
+        serviceLog.info("user found: ", user)
+        return user;
+        
+    } catch (error) {
+        errorLog.error("user dont found", id)
+
+        throw error;
+    }
 };

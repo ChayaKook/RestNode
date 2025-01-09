@@ -1,6 +1,6 @@
 import swaggerJSDoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
-import {Application} from "express";
+import { Application } from "express";
 
 const options = {
     definition: {
@@ -58,16 +58,20 @@ const options = {
                 Business: {
                     type: "object",
                     properties: {
-                        userId: {
+                        _id: { type: "string", example: "852741963" },
+                        name: { type: "string", example: "תותית" },
+                        address: { type: "string", example: "התפוח 66" },
+                        domain: { type: "string", example: "tootit" },
+                        admin: {
                             type: "string",
                             example: "user123",
                         },
                         businessData: {
                             type: "object",
-                            example: {name: "ron-store"},
+                            example: { name: "data" },
                         },
                     },
-                    required: ["userId"],
+                    // required: ["userId"],
                 },
                 Service: {
                     type: "object",
@@ -82,7 +86,7 @@ const options = {
                         },
                         serviceData: {
                             type: "object",
-                            example: {cost: "350"},
+                            example: { cost: "350" },
                         },
                     },
                     required: ["businessId", "name"],
