@@ -47,9 +47,11 @@ export const getAllBusinesses = async (): Promise<Business[] | null> => {
 
 export const updateBusiness = async (business: Business): Promise<Business | null> => {
     try {
-        return await BusinessModel.findByIdAndUpdate(business._id, {business}, {new: true});
+        const res =  await BusinessModel.findByIdAndUpdate(business._id, business, {new: true});
+        serviceLog.info("the business update", res)
+        return res;
     } catch (error) {
-        errorLog.error("Error update business: " + error);
+        errorLog.error("Error in service update business: " + error);
         return null;
     }
 };
@@ -58,7 +60,7 @@ export const deleteBusiness = async (id: string): Promise<Business | null> => {
     try {
         return await BusinessModel.findByIdAndDelete(id);
     } catch (error) {
-        errorLog.error("Error update business: " + error);
+        errorLog.error("Error delete business: " + error);
         return null;
     }
 };
