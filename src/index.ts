@@ -40,6 +40,3 @@ export const startServer = async () => {
 startServer();
 
 export default app;
-
-//הרצה עם npm start
-//שימוש בתכונה נוספת שלר למדנו

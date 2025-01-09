@@ -1,15 +1,15 @@
-import {Router} from "express";
-import {createService, updateService, deleteService, getAllServices} from "../controllers/services.controller";
-import {authMiddleware} from "../middlewares/auth.middleware";
+import { Router } from "express";
+import { createService, updateService, deleteService, getAllServices } from "../controllers/services.controller";
+import { authMiddleware } from "../middlewares/auth.middleware";
 
 const router = Router();
 /**
  * @swagger
  * /Service:
- *  post:
+ *   post:
  *     tags: [Service]
  *     security:
- *      - bearerAuth: []
+ *       - bearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -17,7 +17,7 @@ const router = Router();
  *           schema:
  *             $ref: '#/components/schemas/Service'
  *     responses:
- *       200:
+ *       '200':
  *         description: Successfully created the service
  *         content:
  *           application/json:
@@ -25,13 +25,14 @@ const router = Router();
  *               $ref: '#/components/schemas/Service'
  */
 router.post("", /*authMiddleware,*/ createService);
+
 /**
  * @swagger
  * /Service/{id}:
  *   put:
  *     tags: [Service]
  *     security:
- *      - bearerAuth: []
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -46,20 +47,21 @@ router.post("", /*authMiddleware,*/ createService);
  *             $ref: '#/components/schemas/Service'
  *     responses:
  *       '200':
- *         description: Successfully update service
+ *         description: Successfully updated service
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Service'
  */
 router.put("/:id", /*authMiddleware,*/ updateService);
+
 /**
  * @swagger
  * /Service/{id}:
  *   delete:
  *     tags: [Service]
  *     security:
- *      - bearerAuth: []
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -70,7 +72,8 @@ router.put("/:id", /*authMiddleware,*/ updateService);
  *       '200':
  *         description: Successfully deleted service
  */
-router.delete("/:id", /*authMiddleware, */deleteService);
+router.delete("/:id", /*authMiddleware, */ deleteService);
+
 /**
  * @swagger
  * /Service:
@@ -78,12 +81,13 @@ router.delete("/:id", /*authMiddleware, */deleteService);
  *     tags: [Service]
  *     responses:
  *       '200':
- *         description: Successfully get all services
+ *         description: Successfully retrieved all services
  *         content:
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Service'
  */
 router.get("", getAllServices);
+
 
 export default router;
